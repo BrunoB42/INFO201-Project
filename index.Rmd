@@ -1,0 +1,26 @@
+---
+title: "Econ and Happiness Report"
+author: "Bruno, Grace, Jennifer, Tony"
+date: "2/25/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+source("analysis.R")
+```
+
+## The Data
+
+
+
+## Problem Domain Description
+
+
+
+## Data Description
+
+
+
+## Specific Question Analyses
+
+
