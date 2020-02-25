@@ -1,0 +1,2 @@
+All three CSV files come from the UN's 2019 Happiness Report .xls file
+https://worldhappiness.report/ed/2019/#read
