@@ -1,4 +1,4 @@
-# Data Analysis for INFO 201 Project
+# Question Analysis for INFO 201 Project
 
 library(dplyr)
 library(tidyr)
@@ -18,7 +18,6 @@ change_in_happ <- filter(change_in_happ, change_in_happ$Country %in% countries_i
 happ_data <- filter(happ_data, happ_data$Country %in% countries_in_all_data)
 edu_duration <- filter(edu_duration, edu_duration$Country %in% countries_in_all_data)
 data_set <- left_join(left_join(change_in_happ, happ_data, "Country"), edu_duration, "Country") %>% select(-X,-X.1,-X.2,-X.3,-X.4,-X.5,-X.6,-X.7,-X.8,-X.9,-X.10,-X.11,-X.12)
-
 Current_Education_Happiness_Plot <- ggplot(data = data_set, mapping = aes(x=value, y=Happiness.score)) +
   geom_point() +
   geom_smooth(method = "lm", formula = y ~ poly(x,2)) +
@@ -46,6 +45,8 @@ Change_in_Education_Happiness_Plot <- ggplot(data = change_in_happ, mapping = ae
   xlab("Change in Primary School Enrollment %") +
   ylab("Change in Relative Happiness")
 
+
+
 # Grace Section
 fdi_data <- wb(country = "KOR", indicator = "BX.KLT.DINV.WD.GD.ZS", mrv = 13, return_wide = TRUE) %>%   
   rename("FDI" = BX.KLT.DINV.WD.GD.ZS) %>% 
@@ -71,6 +72,8 @@ southkorea_fdi_happiness_lineplot <- ggplot(data = combined_df) +
   geom_path(mapping = aes(x = Year, y = combined_df$`Perceptions of Corruption`, group = 1, color = "Perceptions of Corruption")) +
   geom_path(mapping = aes(x = Year, y = combined_df$`Democratic Quality`, group = 1, color = "Democratic Quality")) +
   labs(title = "Relationship Between Foreign Direct Investment (FDI) and Government Quality in South Korea", x = "Year", y = "Variables", color = "Variables") 
+
+
 
 # Jennifer Section
 updated_cache <- wbcache()
