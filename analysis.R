@@ -47,6 +47,8 @@ Change_in_Education_Happiness_Plot <- ggplot(data = change_in_happ, mapping = ae
   xlab("Change in Primary School Enrollment %") +
   ylab("Change in Relative Happiness")
 
+hist(change_in_happ <- read.csv("data/CountryChangeInHappiness2018.csv", stringsAsFactors = FALSE)$Changes.in.happiness.scores)
+
 # Grace Section
 
 
