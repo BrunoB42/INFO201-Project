@@ -32,7 +32,7 @@ full_edu_data <- wb(country = "countries_only", indicator = "SE.PRM.ENRR", mrv =
   rename(Country = country)
 #Separating data by year to find change and eliminating data for countries not in all three data sets
 edu_data_2018 <- filter(full_edu_data, date=="2018")
-edu_data_2017 <- filter(full_edu_data, date=="2017")
+edu_data_2017 <- filter(full_edu_data, date=="201`7")
 countries_in_all_data_2 <- intersect(intersect(edu_data_2017$Country,edu_data_2018$Country), change_in_happ$Country)
 edu_data_2018 <- filter(edu_data_2018, edu_data_2018$Country %in% countries_in_all_data_2)
 edu_data_2017 <- filter(edu_data_2017, edu_data_2017$Country %in% countries_in_all_data_2)
