@@ -117,9 +117,9 @@ Health_plot <- ggplot(data = expectancy, mapping = aes(x = spending, y = Avg_lif
 # Tony Section
 
 us_debt_df <- wb(country = "USA",
-              indicator = c("GC.DOD.TOTL.GD.ZS"),
-              mrv = 20,
-              return_wide = TRUE)
+                 indicator = c("GC.DOD.TOTL.GD.ZS"),
+                 mrv = 20,
+                 return_wide = TRUE)
 
 us_debt_df <- us_debt_df %>%
   mutate(date = as.numeric(date), "Year" = date, date = NULL)
@@ -127,6 +127,13 @@ us_debt_df <- us_debt_df %>%
 us_debt_df <- us_debt_df %>%
   mutate(debt = GC.DOD.TOTL.GD.ZS) %>%
   select(Year, debt)
+
+happiness_df <- read.csv('data/UNRawHappinessData.csv', stringsAsFactors = FALSE)
+
+corruption_happiness_df <- happiness_df %>%
+  filter(Country.name == "United States") %>%
+  select(Year, Perceptions.of.corruption) %>%
+  mutate(Perceptions.of.corruption = Perceptions.of.corruption * 100)
 
 debt_corruption <- left_join(us_debt_df, corruption_happiness_df, by = "Year") %>%
   filter(Year >= 2006)
