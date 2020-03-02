@@ -15,6 +15,11 @@ source("analysis.R")
 
 ## Problem Domain Description
 
+We gathered indicators of interest from the World Bank and gathered World Happiness data. Our goal is to compare our economic indicators with variables from the World Happiness report. The world happiness report presents global data on national happiness that shows how factors such as government debt and health spending can impact life evaluations on the quality of life. The indicators we choose were health expenditure, primary education enrollment, years of compulsory education, central government debt, and foreign direct investment. We compared these indicators to factors that contribute to happiness such as life expectancy, reported happiness, change in reported happiness, perceptions of corruption, and democratic quality. We want to find the relationships between the economic variables and factors to show if there is a strong correlation between an action and the outcome. We find this problem domain interesting and necessary to explore because the the outcome may indicate the amount of resources that a government needs to dedicate to a particular area. 
+
+
+### Is there a correlation between health expenditure and healthy life expectancy?
+The result of this question will allow the country to know if they should focus more of resources to create better health outcomes for the population. The visual representation created from comparing average health expenditure to life expentancy will demonstrate whether there is a relationship between the two variables of interest. 
 
 
 ## Data Description
