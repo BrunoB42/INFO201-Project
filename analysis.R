@@ -62,7 +62,7 @@ corruption_max <- summarize(southkorea_happiness, Perceptions_of_Corruption_Max 
 democratic_min <- summarize(southkorea_happiness, Democratic_Quality_Min = min(southkorea_happiness$Democratic.Quality, na.rm = TRUE))
 
 # 2) Graphic or plot showing distribution/trend
-ggplot(data = southkorea_happiness) + 
+sk_corruption_line <- ggplot(data = southkorea_happiness) + 
   geom_point(mapping = aes(x = Year, y = Perceptions.of.corruption)) +
   geom_path(mapping = aes(x = Year, y = Perceptions.of.corruption)) +
   labs(title = "Perceived Corruption Throughout Time in South Korea's Public Sector", x = "Year", y = "Perceived Level of Corruption")
