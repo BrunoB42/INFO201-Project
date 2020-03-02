@@ -71,7 +71,7 @@ southkorea_fdi_happiness_lineplot <- ggplot(data = combined_df) +
   geom_path(mapping = aes(x = Year, y = FDI, group = 1, color = "FDI")) +
   geom_path(mapping = aes(x = Year, y = combined_df$`Perceptions of Corruption`, group = 1, color = "Perceptions of Corruption")) +
   geom_path(mapping = aes(x = Year, y = combined_df$`Democratic Quality`, group = 1, color = "Democratic Quality")) +
-  labs(title = "Relationship Between Foreign Direct Investment (FDI) and Government Quality in South Korea", x = "Year", y = "Variables", color = "Variables") 
+  labs(title = "Foreign Direct Investment (FDI) vs. Government Quality in South Korea", x = "Year", y = "Variables", color = "Variables") 
 
 
 
