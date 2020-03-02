@@ -16,9 +16,12 @@ source("analysis.R")
 ## Problem Domain Description
 
 
-
 ## Data Description
+```{r health, echo = FALSE}
+life_average_plot
+```
 
+This histogram displays the distribution of average healthy life expectancies of countries from 2000 - 2018. The minimum average health life expectancy in this plot is `r summary_stats[[1]]`years and the maximum average health life expectancy is `r summary_stats[[6]]` years. The average life expectancy for citizens in the countries listed in two data sets is about `r summary_stats[[4]]` years. The histogram reveals the that distrubition is suffiently uneven with some extreme values and there may be factors to further explore that are contributing to it. 
 
 
 ## Specific Question Analyses
