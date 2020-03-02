@@ -7,7 +7,8 @@ output: html_document
 
 ```{r setup, include=FALSE}
 source("analysis.R")
-library(knitr)
+library("knitr")
+
 ```
 
 ## The Data
@@ -39,11 +40,36 @@ The correlation between the changes in debt and the changes in the perceptions o
 
 With such a high correlation value of `r debt_corruption_correlation[1, 2]`, it is quite clear that the relationship between the two is as such: the rise in debt in the US results in the rise of the perception of corruption. Taking a look at 2013 to 2015, we can see that the debt percentage stabilizes with a change of `r debt_corruption[8, "debt"]` to `r debt_corruption[10, "debt"]`, and the perception of corruption decreases during the same years, from `r debt_corruption[8, "Perceptions.of.corruption"]` to `r debt_corruption[10, "Perceptions.of.corruption"]`. This shows that even if the debt percentage stagantes, the perceptions of corruption goes down. Then again in 2015, the debt rises again to `r debt_corruption[11, "debt"]`, and as a result, the perception of corruption rises to `r debt_corruption[11, "Perceptions.of.corruption"]`.
 
+### Does a country's education determine or influence the happiness of its citizens?
 
+In order to answer the question of whether education determines happiness for citizens, data on primary school enrollment and on years of compulsory education were taken from the World Bank data set to act as meaures of education while the relative reported happiness and change in happiness were taken from the UN Happiness report to act as measures of happiness by country.
 
+In order to answer this question the years of compulsory education and reported happiness in 2018 were taken, cleaned to ensure that only countries in both data sets were included, then plotted against each other to show the correlation between education and happiness. In addition to this, the difference in primary school enrollment and in reported happiness from 2017 to 2018 were taken, cleaned of countries not present in both data sets, and plotted against each other to show if happiness changes alongside education.
 
+```{r edu_happ, echo = FALSE}
+kable(data_set_to_display)
+Current_Education_Happiness_Plot
+```
 
+```{r edu_happ_change, echo = FALSE}
+kable(change_in_happ_to_display)
+Change_in_Education_Happiness_Plot
+```
 
+In the above plots, the corellation between Years of education and Happiness was `r current_cor` and the correlation between change in primary school enrollment and education was `r change_cor`.
 
+From the shallow slopes, spread out data points, and low correlation values it can be concluded that education is not a predominant factor in the happiness of a country. The fact that the data points are all spread out and not concentrated along a line or a curve suggest that the effect of education on happiness is less significant than it is for other factors. Thus, it can be ultimately concluded that since the slope of the plot is positive, an increase in education is correlated with an increase in happiness, but since the correlation value is so low, it cannot be concluded that the correlation is a significant one.
 
+### Is there a correlation between health expenditure and healthy life expectancy?
 
+The health expenditure dataset includes a value that is the the percent of Gross Domestic Product(GDP), a representation of the monetary value of goods and services, that each country is spending on health care costs within a year. The question attempts to answer if the % of GDP spent contributes to higher or lower life expectancies. I took the average percent of GDP spent on healthcare and compared it to the average life expectancies for each country. 
+
+```{r health table , echo = FALSE}
+kable(expectancy_table)
+```
+
+```{r health, echo = FALSE}
+Health_plot
+```
+
+It appears that there is a slight relationship between average % of GDP spent on health care and life expectancy with a correlation of `r correlation[[2]]`. The average health expenditure of countries is `r summary_spend[[4]]` % of GDP and the average life expectancy of countries is `r summary_life[[4]]` years. Since the correlation is weak, this reveals that spending a high percentage of GDP on health care doesn't necessarily result in higher life expectancy in a country as countries that have spent less % of GDP on healthcare have shown to have high average life expectancy. 
