@@ -11,7 +11,7 @@ updated_cache <- wbcache()
 edu_duration <- wb(country = "countries_only", indicator = "SE.COM.DURS", mrv = 10, cache = updated_cache) %>% filter(date=="2018") %>% rename(Country = country)
 change_in_happ <- read.csv("data/CountryChangeInHappiness2018.csv", stringsAsFactors = FALSE) %>% arrange(Country)
 happ_data <- read.csv("data/CountryHappiness2018.csv", stringsAsFactors = FALSE) %>% arrange(Country)
-raw_happ_data <- read.csv("data/UNRawHappinessData2018.csv", stringsAsFactors = FALSE) %>% arrange(Country)
+#raw_happ_data <- read.csv("data/UNRawHappinessData2018.csv", stringsAsFactors = FALSE) %>% arrange(Country)
 #Eliminating data for countries not in all three data sets
 countries_in_all_data <- intersect(intersect(change_in_happ$Country, happ_data$Country),edu_duration$Country)
 change_in_happ <- filter(change_in_happ, change_in_happ$Country %in% countries_in_all_data)
@@ -80,30 +80,44 @@ updated_cache <- wbcache()
 health_expenditure <- wb(country = "countries_only", cache = updated_cache, indicator = c("SH.XPD.CHEX.GD.ZS"), mrv = 20) 
 happy_df <- read.csv('data/UNRawHappinessData.csv', stringsAsFactors = FALSE)
 colnames(happy_df)[1] <-  "country"
+# made sure that countries in health data and happy data matched
 countries_in_both <- intersect(health_expenditure$country, happy_df$country)
 health_expenditure <- filter(health_expenditure, health_expenditure$country %in% countries_in_both)
 happy_df <- filter(happy_df, happy_df$country %in% countries_in_both)
-
+# joined the health spending and happy data together
 expectancy <- left_join(health_expenditure, happy_df, by = "country") %>% 
-  #filter(date == 2016 & Year == 2016) %>% 
   group_by(iso3c) %>% 
   summarise(
     spending = mean(value),
     Avg_life_expectancy=mean(Healthy.life.expectancy.at.birth)
   )
+
+# Got summary statistics and correlation of columns
+stats <- select(expectancy, spending , Avg_life_expectancy ) 
+correlation <- cor(stats)
+  
+  
+#Created a data table with the first 20 countries
+expectancy_table <- left_join(health_expenditure, happy_df, by = "country") %>% 
+  group_by(iso3c) %>% 
+  summarise(
+    spending = mean(value),
+    Avg_life_expectancy=mean(Healthy.life.expectancy.at.birth)
+  ) %>% 
+  head(10)
 expectancy_spend <- arrange(expectancy, iso3c) %>% 
   select(iso3c, spending) %>% 
   filter(!is.na(spending)) %>% 
   head(30)
   
-
+#Plotted a bar graph of the average % of GDP spent per country
 Country_spend <-ggplot(data = expectancy_spend, mapping = aes(x = reorder(iso3c, spending), y = spending)) + 
   geom_col()+
   labs(title= "Health Care Expenditures per Country", x = "Country", y = "Spending(% of GDP)")+
   theme(axis.text.x = element_text(size= 5,angle= 90))
 
   
-#Compares Health Care Spending(% of GDP) to Healthy Life Expectancy for High income countries
+#Compares Health Care Spending(% of GDP) to Healthy Life Expectancy for countries
 Health_plot <- ggplot(data = expectancy, mapping = aes(x = spending, y = Avg_life_expectancy))+
   geom_point()+
   geom_smooth(method = "lm" , formula = y~x)+

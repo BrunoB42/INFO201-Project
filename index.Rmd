@@ -22,5 +22,15 @@ source("analysis.R")
 
 
 ## Specific Question Analyses
+### Is there a correlation between health expenditure and healthy life expectancy?
 
+The health expenditure dataset includes a value that is the the percent of Gross Domestic Product(GDP), a representation of the monetary value of goods and services, that each country is spending on health care costs within a year. The question attempts to answer if the % of GDP spent contributes to higher or lower life expectancies. I took the average percent of GDP spent on healthcare and compared it to the average life expectancies for each country. 
+
+```{r health table , echo = FALSE}
+expectancy_table
+```
+
+```{r health, echo = FALSE}
+Health_plot
+```
 
