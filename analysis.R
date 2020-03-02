@@ -74,7 +74,7 @@ Change_in_Happiness_Hist <- ggplot(data = change_in_happ, mapping = aes(x = Chan
   labs(title = "Change in Happiness from 2017 to 2018 by Country") +
   xlab("Change in Relative Happiness") +
   ylab("Count")
-Change_in_Happiness_Summary <- summary(change_in_happ["Changes.in.happiness.scores"])
+Change_in_Happiness_Summary <- as.list(summary(change_in_happ$Changes.in.happiness.scores))
 
 edu_duration_raw <- wb(country = "countries_only", indicator = "SE.COM.DURS", mrv = 10, cache = updated_cache) %>% head(12)
 happ_data_raw <- read.csv("data/CountryHappiness2018.csv", stringsAsFactors = FALSE) %>% head(12)
