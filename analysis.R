@@ -115,14 +115,17 @@ Health_plot <- ggplot(data = expectancy, mapping = aes(x = spending, y = Avg_lif
 
 
 # Tony Section
-
+# Called the World Bank Dataset regarding the percentage of debt in the US in the last 20 years.
 us_debt_df <- wb(country = "USA",
                  indicator = c("GC.DOD.TOTL.GD.ZS"),
                  mrv = 20,
                  return_wide = TRUE)
 
+# Renamed the "date" column to "Year" so it matches the happiness data set, and made the values
+# as numbers rather than dates.
 us_debt_df <- us_debt_df %>%
   mutate(date = as.numeric(date), "Year" = date, date = NULL)
+
 
 us_debt_df <- us_debt_df %>%
   mutate(debt = GC.DOD.TOTL.GD.ZS) %>%
