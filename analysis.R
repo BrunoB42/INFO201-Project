@@ -7,8 +7,6 @@ library(wbstats)
 
 # Bruno Section
 
-<<<<<<< HEAD
-=======
 updated_cache <- wbcache()
 edu_duration <- wb(country = "countries_only", indicator = "SE.COM.DURS", mrv = 10, cache = updated_cache) %>% filter(date=="2018") %>% rename(Country = country)
 change_in_happ <- read.csv("data/CountryChangeInHappiness2018.csv", stringsAsFactors = FALSE) %>% arrange(Country)
@@ -144,7 +142,6 @@ sk_corruption_line <- ggplot(data = southkorea_happiness) +
 # There are no outliers. Most of the values range from 0.75-0.90, which indicates that South Korean citizens do not perceive as much corruption from their government. 
 
 # Jennifer Section
-updated_cache <- wbcache()
 health_expenditure <- wb(country = "countries_only", cache = updated_cache, indicator = c("SH.XPD.CHEX.GD.ZS"), mrv = 20) 
 happy_df <- read.csv('data/UNRawHappinessData.csv', stringsAsFactors = FALSE)
 colnames(happy_df)[1] <-  "country"
