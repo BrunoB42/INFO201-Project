@@ -31,9 +31,9 @@ The result of this question will allow the country to know if they should focus 
 
 Figuring out if there is a certain relationship between the debt and the perceptions of corruption in the United States could potentially help us resolve the trust issues people might have against the government. By taking a look at the correlation and relationship between the two, we can see if the amount of debt plays a role in the perceptions of corruption and take action on reducing, or perhaps increasing, debt to mend or establish trust in the nation, and further contribute to the increase in happiness.
 
-* QUESTION 4
+* What is the relationship between the amount of South Korea's foreign direct investment (FDI) and quality of government? 
 
-
+Analyzing this relationship can help us make connections about whether or not if South Korea's government treats its citizens differently if it receives more or less foreign aid from other countries. This relates back to our overall analysis between economic variables and happiness because a country's government can heavily impact its people based on the government's policy decisions and ability to openly express opinions about its democracy. 
 
 ## Data Description
 
