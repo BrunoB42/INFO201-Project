@@ -27,7 +27,10 @@ The answer to this question is important since it will inform a country's decisi
 
 The result of this question will allow the country to know if they should focus more of resources to create better health outcomes for the population. The visual representation created from comparing average health expenditure to life expentancy will demonstrate whether there is a relationship between the two variables of interest. 
 
-* QUESTION 3
+* How does the amount of government debt in the US affect the perceptions of corruption?
+
+Figuring out if there is a certain relationship between the debt and the perceptions of corruption in the United States could potentially help us resolve the trust issues people might have against the government. By taking a look at the correlation and relationship between the two, we can see if the amount of debt plays a role in the perceptions of corruption and take action on reducing, or perhaps increasing, debt to mend or establish trust in the nation, and further contribute to the increase in happiness.
+
 * QUESTION 4
 
 
