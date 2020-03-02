@@ -1,5 +1,4 @@
 ---
-
 title: "World Bank Indicators and United Nations World Happiness Report"
 author: "Bruno Barreto, Grace Chun, Jennifer Qin, Tony Choi"
 date: "03/01/2020"
@@ -16,6 +15,47 @@ library("knitr")
 
 ## Data Description
 
+In order to address our questions, we will be using two main data sets.
+Firstly, we will use the [World Bank's economic indicator data set](https://data.worldbank.org/indicator?tab=all), which contains data on numerous economic indicators from countries around the world and over many years.
+And secondly, we will compare these economic indicators to the [UN's World Happiness Report](https://worldhappiness.report/) for 2018 and 2019, which contains extensive data on the reported happiness and the factors behind them for countries across the world.
+
+`r kable(edu_duration_raw)`
+
+In the above data from the World Bank, the indicator column describes what type of data is present in the table while the value column gives the value of that indicator at the time and in the country given by the date and country columns respectively.
+
+`r kable(happ_data_raw)`
+
+In the above Happiness Report data, all column values are _relative_ values that indicate either the reported happiness for a particular country, in the Happiness.score column, or the amount of that reported happiness that is explained by a particular factor, such as in the Explained.by..GDP.per.capita column.
+These values are all relative to the reported happiness value for a hypothetical country, Dystopia, that uses the lowest values in all categories from the previous year's report and as such cannot be used for anything other than relative comparisons.
+
+### Summary Analysis
+
+The data for the change in happiness from the UN has a mean of `r Change_in_Happiness_Summary[[4]]`, a median of `r Change_in_Happiness_Summary[[3]]`, a first quartile of `r Change_in_Happiness_Summary[[2]]`, and a third quartile of `r Change_in_Happiness_Summary[[5]]`.
+These values show that the average country in the data set showed very little change school enrollment since the quartiles and mean are very close to 0%.
+
+```{r happ_change_plot, echo = FALSE}
+Change_in_Happiness_Hist
+```
+
+In the above histogram, it can be seen that the change in happiness data has an extreme outlier in the form of Malawi with a `r change_in_happ$Changes.in.happiness.scores[22]` change in relative happiness. 
+
+```{r health, echo = FALSE}
+life_average_plot
+```
+
+This histogram displays the distribution of average healthy life expectancies of countries from 2000 - 2018. The minimum average health life expectancy in this plot is `r summary_stats[[1]]`years and the maximum average health life expectancy is `r summary_stats[[6]]` years. The average life expectancy for citizens in the countries listed in two data sets is about `r summary_stats[[4]]` years. The histogram reveals the that distrubition is suffiently uneven with some extreme values and there may be factors to further explore that are contributing to it. 
+
+```{r us_debt_over_time, echo = FALSE}
+us_debt_over_time_plot
+```
+
+The data set of debt in the US from 2006 to 2016 does not have significant outliers, but rather shows a positive trend throughout the years. Although the difference in the debt percentage from 2006 to 2016 is `r us_debt_summary$range`, the debt percentage grew rapidly each year. The correlation between the years and percentages is `r us_debt_correlation[1, 2]` and the average percentage of debt is `r us_debt_summary$mean`.
+
+```{r, echo=FALSE}
+sk_corruption_line
+```
+
+For one of my variables, I chose to analyze perceptions of corruption in South Korea. The line plot above displays data from 2006 to 2018 for South Korea. According to the UN's World Happiness Report, countries have less perceived corruption if the values are higher. Vice versa, countries have more perceived corruption if the values are lower. Throughout the graph, perceived corruption remains between 0.75 - 0.87, which means that South Korean citizens perceive less corruption from their government and public sector. Therefore, there are no outliers. The mean value is `r corruption_mean`; the minimum value is `r corruption_min`; and the maximum value is `r corruption_max`.
 
 ## Specific Question Analyses
 
@@ -99,4 +139,3 @@ Health_plot
 ```
 
 It appears that there is a slight relationship between average % of GDP spent on health care and life expectancy with a correlation of `r correlation[[2]]`. The average health expenditure of countries is `r summary_spend[[4]]` % of GDP and the average life expectancy of countries is `r summary_life[[4]]` years. Since the correlation is weak, this reveals that spending a high percentage of GDP on health care doesn't necessarily result in higher life expectancy in a country as countries that have spent less % of GDP on healthcare have shown to have high average life expectancy. 
->>>>>>> Question_Analysis
