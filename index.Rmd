@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 source("analysis.R")
+library("knitr")
 ```
 
 ## The Data
@@ -24,3 +25,22 @@ source("analysis.R")
 ## Specific Question Analyses
 
 
+### Does a country's education determine or influence the happiness of its citizens?
+
+In order to answer the question of whether education determines happiness for citizens, data on primary school enrollment and on years of compulsory education were taken from the World Bank data set to act as meaures of education while the relative reported happiness and change in happiness were taken from the UN Happiness report to act as measures of happiness by country.
+
+In order to answer this question the years of compulsory education and reported happiness in 2018 were taken, cleaned to ensure that only countries in both data sets were included, then plotted against each other to show the correlation between education and happiness. In addition to this, the difference in primary school enrollment and in reported happiness from 2017 to 2018 were taken, cleaned of countries not present in both data sets, and plotted against each other to show if happiness changes alongside education.
+
+```{r edu_happ, echo = FALSE}
+kable(data_set_to_display)
+Current_Education_Happiness_Plot
+```
+
+```{r edu_happ_change, echo = FALSE}
+kable(change_in_happ_to_display)
+Change_in_Education_Happiness_Plot
+```
+
+In the above plots, the corellation between Years of education and Happiness was `r current_cor` and the correlation between change in primary school enrollment and education was `r change_cor`.
+
+From the shallow slopes, spread out data points, and low correlation values it can be concluded that education is not a predominant factor in the happiness of a country. The fact that the data points are all spread out and not concentrated along a line or a curve suggest that the effect of education on happiness is less significant than it is for other factors. Thus, it can be ultimately concluded that since the slope of the plot is positive, an increase in education is correlated with an increase in happiness, but since the correlation value is so low, it cannot be concluded that the correlation is a significant one.

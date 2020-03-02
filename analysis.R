@@ -11,7 +11,6 @@ updated_cache <- wbcache()
 edu_duration <- wb(country = "countries_only", indicator = "SE.COM.DURS", mrv = 10, cache = updated_cache) %>% filter(date=="2018") %>% rename(Country = country)
 change_in_happ <- read.csv("data/CountryChangeInHappiness2018.csv", stringsAsFactors = FALSE) %>% arrange(Country)
 happ_data <- read.csv("data/CountryHappiness2018.csv", stringsAsFactors = FALSE) %>% arrange(Country)
-raw_happ_data <- read.csv("data/UNRawHappinessData2018.csv", stringsAsFactors = FALSE) %>% arrange(Country)
 #Eliminating data for countries not in all three data sets
 countries_in_all_data <- intersect(intersect(change_in_happ$Country, happ_data$Country),edu_duration$Country)
 change_in_happ <- filter(change_in_happ, change_in_happ$Country %in% countries_in_all_data)
@@ -25,13 +24,16 @@ Current_Education_Happiness_Plot <- ggplot(data = data_set, mapping = aes(x=valu
   xlab("Years of Compulsory Education") +
   ylab("Relative Happiness")
 
+data_set_to_display <- data_set %>% head(15) %>% select(-indicator)
+current_cor <- cor(data_set$value,data_set$Happiness.score)
+
 change_in_happ <- read.csv("data/CountryChangeInHappiness2018.csv", stringsAsFactors = FALSE) %>% arrange(Country) %>% filter(Country!="Sierra Leone")
 full_edu_data <- wb(country = "countries_only", indicator = "SE.PRM.ENRR", mrv = 3, cache = updated_cache) %>% 
   filter(date!="2019") %>% 
   rename(Country = country)
 #Separating data by year to find change and eliminating data for countries not in all three data sets
 edu_data_2018 <- filter(full_edu_data, date=="2018")
-edu_data_2017 <- filter(full_edu_data, date=="201`7")
+edu_data_2017 <- filter(full_edu_data, date=="2017")
 countries_in_all_data_2 <- intersect(intersect(edu_data_2017$Country,edu_data_2018$Country), change_in_happ$Country)
 edu_data_2018 <- filter(edu_data_2018, edu_data_2018$Country %in% countries_in_all_data_2)
 edu_data_2017 <- filter(edu_data_2017, edu_data_2017$Country %in% countries_in_all_data_2)
@@ -44,6 +46,9 @@ Change_in_Education_Happiness_Plot <- ggplot(data = change_in_happ, mapping = ae
   labs(title = "Change in Happiness and School Enrollment from 2017 to 2018 by Country") +
   xlab("Change in Primary School Enrollment %") +
   ylab("Change in Relative Happiness")
+
+change_in_happ_to_display <- change_in_happ %>% head(15)
+change_cor <- cor(change_in_happ$change_in_education, change_in_happ$Changes.in.happiness.scores)
 
 # Grace Section
 fdi_data <- wb(country = "KOR", indicator = "BX.KLT.DINV.WD.GD.ZS", mrv = 13, return_wide = TRUE) %>%   
@@ -74,7 +79,6 @@ southkorea_fdi_happiness_lineplot <- ggplot(data = combined_df) +
 
 
 # Jennifer Section
-updated_cache <- wbcache()
 health_expenditure <- wb(country = "countries_only", cache = updated_cache, indicator = c("SH.XPD.CHEX.GD.ZS"), mrv = 20) 
 happy_df <- read.csv('data/UNRawHappinessData.csv', stringsAsFactors = FALSE)
 colnames(happy_df)[1] <-  "country"
