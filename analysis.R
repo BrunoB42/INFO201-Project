@@ -1,4 +1,4 @@
-# Question Analysis for INFO 201 Project
+#Section 3 Question Analysis for INFO 201 Project
 
 library(dplyr)
 library(tidyr)
@@ -45,25 +45,24 @@ Change_in_Education_Happiness_Plot <- ggplot(data = change_in_happ, mapping = ae
   ylab("Change in Relative Happiness")
 
 
-
 # Grace Section
-fdi_data <- wb(country = "KOR", indicator = "BX.KLT.DINV.WD.GD.ZS", mrv = 13, return_wide = TRUE) %>%   
-  rename("FDI" = BX.KLT.DINV.WD.GD.ZS) %>% 
+fdi_data <- wb(country = "KOR", indicator = "BX.KLT.DINV.WD.GD.ZS", mrv = 13, return_wide = TRUE) %>% # Gather data about South Korea's FDI over the past 12 years  
+  rename("FDI" = BX.KLT.DINV.WD.GD.ZS) %>% # Renaming columns
   rename("Year" = date)
-fdi_mean <- summarize(fdi_data, FDI_Average = mean(fdi_data$FDI)) 
+fdi_mean <- summarize(fdi_data, FDI_Average = mean(fdi_data$FDI)) # Find average
 
-happiness_df <- read.csv("data/UNRawHappinessData.csv", stringsAsFactors = FALSE)
+happiness_df <- read.csv("data/UNRawHappinessData.csv", stringsAsFactors = FALSE) # Collect data from the UN
 southkorea_happiness <- happiness_df %>% 
-  filter(Country.name == "South Korea") %>% 
-  select(Year, Perceptions.of.corruption, Democratic.Quality) 
+  filter(Country.name == "South Korea") %>% # Only view South Korea's data
+  select(Year, Perceptions.of.corruption, Democratic.Quality) # View only two columns
 
-combined_df <- merge(fdi_data, southkorea_happiness, by.x = "Year", sort = TRUE) %>% 
+combined_df <- merge(fdi_data, southkorea_happiness, by.x = "Year", sort = TRUE) %>%  # Make a single table
   rename("Country" = country) %>% 
   rename("Perceptions of Corruption" = Perceptions.of.corruption) %>% 
   rename("Democratic Quality" = Democratic.Quality) %>% 
   select("Year", "FDI", "Perceptions of Corruption", "Democratic Quality")
 
-southkorea_fdi_happiness_lineplot <- ggplot(data = combined_df) +
+southkorea_fdi_happiness_lineplot <- ggplot(data = combined_df) + # Plot three lines to compare South Korea's FDI, perceived corruption, and democratic quality
   geom_point(mapping = aes(x = Year, y = combined_df$FDI, color = "FDI")) +
   geom_point(mapping = aes(x = Year, y = combined_df$`Perceptions of Corruption`, color = "Perceptions of Corruption")) +
   geom_point(mapping = aes(x = Year, y = combined_df$`Democratic Quality`, color = "Democratic Quality")) +
@@ -71,7 +70,6 @@ southkorea_fdi_happiness_lineplot <- ggplot(data = combined_df) +
   geom_path(mapping = aes(x = Year, y = combined_df$`Perceptions of Corruption`, group = 1, color = "Perceptions of Corruption")) +
   geom_path(mapping = aes(x = Year, y = combined_df$`Democratic Quality`, group = 1, color = "Democratic Quality")) +
   labs(title = "Foreign Direct Investment (FDI) vs. Government Quality in South Korea", x = "Year", y = "Variables", color = "Variables") 
-
 
 
 # Jennifer Section
@@ -110,7 +108,6 @@ Health_plot <- ggplot(data = expectancy, mapping = aes(x = spending, y = Avg_lif
   geom_smooth(method = "lm" , formula = y~x)+
   labs(title= "Health Care Expenditures Compared to Healthy Life Expectancy", x = "Average Spending(% of GDP)", y = "Healthy Life Expectancy")+
   xlim(1,17)
-
 
 
 # Tony Section
