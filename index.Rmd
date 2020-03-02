@@ -57,10 +57,7 @@ The data set of debt in the US from 2006 to 2016 does not have significant outli
 sk_corruption_line
 ```
 
-The perceived corruption values were collected by Transparency International in collaboration with the World Bank.
-Lower values mean that the public views high degrees of corruption within their government, while higher numbers indicate relative improvement. 
-The mean value is `r corruption_mean`; the minimum value is `r corruption_min`; and the maximum value is `r corruption_max`.
-From this line plot, there are no outliers. The perceived corruption values are between 0.75-0.90, which represents that South Korea's government has a good reputation for not having too much corruption.
+For one of my variables, I chose to analyze perceptions of corruption in South Korea. The line plot above displays data from 2006 to 2018 for South Korea. According to the UN's World Happiness Report, countries have less perceived corruption if the values are higher. Vice versa, countries have more perceived corruption if the values are lower. Throughout the graph, perceived corruption remains between 0.75 - 0.87, which means that South Korean citizens perceive less corruption from their government and public sector. Therefore, there are no outliers. The mean value is `r corruption_mean`; the minimum value is `r corruption_min`; and the maximum value is `r corruption_max`.
 
 ## Specific Question Analyses
 
