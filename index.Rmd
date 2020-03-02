@@ -9,18 +9,22 @@ output: html_document
 source("analysis.R")
 ```
 
-## The Data
-
-
-
 ## Problem Domain Description
 
 
+
+### Analysis Questions
+
+In order to determine the relationship between economic factors and the factors that determine happiness, we will investigate four main analysis questions:
+
+* Does a country's education determine or influence the happiness of its citizens?
+* QUESTION 2
+* QUESTION 3
+* QUESTION 4
 
 ## Data Description
 
 
 
 ## Specific Question Analyses
-
 
