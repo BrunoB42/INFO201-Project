@@ -1,4 +1,4 @@
-# Data Description for INFO 201 Project
+#Section 2 Data Description for INFO 201 Project
 
 library(dplyr)
 library(tidyr)
@@ -78,6 +78,7 @@ Change_in_Happiness_Summary <- as.list(summary(change_in_happ$Changes.in.happine
 edu_duration_raw <- wb(country = "countries_only", indicator = "SE.COM.DURS", mrv = 10, cache = updated_cache) %>% head(12)
 happ_data_raw <- read.csv("data/CountryHappiness2018.csv", stringsAsFactors = FALSE) %>% head(12)
 
+
 # Grace Section
 
 # 1) In my analysis, I used two different data sets: data in regards to how much countries receive foreign direct investment (FDI), 
@@ -139,7 +140,8 @@ sk_corruption_line <- ggplot(data = southkorea_happiness) +
   labs(title = "Perceived Corruption Throughout Time in South Korea's Public Sector", x = "Year", y = "Perceived Level of Corruption")
 
 # 3) Any outliers?
-# There are no outliers. Most of the values range from 0.75-0.90, which indicates that South Korean citizens do not perceive as much corruption from their government. 
+# There are no outliers. Most of the values range from 0.75-0.87, which indicates that South Korean citizens do not perceive as much corruption from their government. 
+
 
 # Jennifer Section
 health_expenditure <- wb(country = "countries_only", cache = updated_cache, indicator = c("SH.XPD.CHEX.GD.ZS"), mrv = 20) 
@@ -169,7 +171,6 @@ life_plot <- ggplot(data=spend_expect, aes(spend_expect$Healthy.life.expectancy.
 life_average_plot <- ggplot(data=expectancy, aes(expectancy$Avg_life_expectancy)) +
   geom_histogram(color="darkblue", fill="lightblue", binwidth = 4)+
   labs(title = "Histogram for Average Life Expectancy", x = "Average Life Expectancy", y = "Frequency")
-
 
 
 # Tony Section
