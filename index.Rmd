@@ -12,6 +12,27 @@ library("knitr")
 
 ## Problem Domain Description
 
+We gathered indicators of interest from the World Bank and gathered World Happiness data. Our goal is to compare our economic indicators with variables from the World Happiness report. The world happiness report presents global data on national happiness that shows how factors such as government debt and health spending can impact subjective evaluations on the quality of life. The World Bank is a data set of indicators, or variables that can indicate the economic status of a region. Between the two of these data sets, we can determine the relationship between factors that determine economic status and factors that determine happiness. The indicators we chose were health expenditure, primary education enrollment, years of compulsory education, central government debt, and foreign direct investment. We compared these indicators to factors that contribute to happiness such as life expectancy, reported happiness, change in reported happiness, perceptions of corruption, and democratic quality. We want to find the relationships between the economic variables and factors to show if there is a strong correlation between an action and the outcome. We find this problem domain interesting and necessary to explore because the the outcome may indicate the amount of resources that a government needs to dedicate to a particular area.
+
+### Analysis Questions
+
+In order to determine the relationship between economic factors and the factors that determine happiness, we will investigate four main analysis questions:
+
+* Does a country's education determine or influence the happiness of its citizens?
+
+The answer to this question is important since it will inform a country's decision to invest in education spending if it is concerned about the happiness of its citizens. By determining the correlation, or lack therof, between the World Bank's economic factors on education and the UN's factors of happiness, we can gain insight into whther or not education investment is the proper course of action for raising citizen happiness.
+
+* Is there a correlation between health expenditure and healthy life expectancy?
+
+The result of this question will allow the country to know if they should focus more of resources to create better health outcomes for the population. The visual representation created from comparing average health expenditure to life expentancy will demonstrate whether there is a relationship between the two variables of interest. 
+
+* How does the amount of government debt in the US affect the perceptions of corruption?
+
+Figuring out if there is a certain relationship between the debt and the perceptions of corruption in the United States could potentially help us resolve the trust issues people might have against the government. By taking a look at the correlation and relationship between the two, we can see if the amount of debt plays a role in the perceptions of corruption and take action on reducing, or perhaps increasing, debt to mend or establish trust in the nation, and further contribute to the increase in happiness.
+
+* What is the relationship between the amount of South Korea's foreign direct investment (FDI) and quality of government? 
+
+Analyzing this relationship can help us make connections about whether or not if South Korea's government treats its citizens differently if it receives more or less foreign aid from other countries. This relates back to our overall analysis between economic variables and happiness because a country's government can heavily impact its people based on the government's policy decisions and ability to openly express opinions about its democracy. 
 
 ## Data Description
 
@@ -55,56 +76,9 @@ The data set of debt in the US from 2006 to 2016 does not have significant outli
 sk_corruption_line
 ```
 
-For one of my variables, I chose to analyze perceptions of corruption in South Korea. The line plot above displays data from 2006 to 2018 for South Korea. According to the UN's World Happiness Report, countries have less perceived corruption if the values are higher. Vice versa, countries have more perceived corruption if the values are lower. Throughout the graph, perceived corruption remains between 0.75 - 0.87, which means that South Korean citizens perceive less corruption from their government and public sector. Therefore, there are no outliers. The mean value is `r corruption_mean`; the minimum value is `r corruption_min`; and the maximum value is `r corruption_max`.
+For one of my variables, I chose to analyze perceptions of corruption in South Korea. The line plot above displays data from 2006 to 2017 for South Korea. According to the UN's World Happiness Report, countries have less perceived corruption if the values are higher. Vice versa, countries have more perceived corruption if the values are lower. Throughout the graph, perceived corruption remains between 0.75 - 0.87, which means that South Korean citizens perceive less corruption from their government and public sector. Therefore, there are no outliers. The mean value is `r corruption_mean`; the minimum value is `r corruption_min`; and the maximum value is `r corruption_max`.
 
 ## Specific Question Analyses
-
-### What is the relationship between the amount of South Korea's foreign direct investment (FDI) and quality of government? ###
-
-Foreign direct investment (FDI) refers to the net inflows of investment to acquire a lasting management interest (10% or more of voting stock) in an enterprise operating in an economy besides the investor. This measure includes factors, such as:
-
-* Sum of equity capital 
-* Reinvestment of earnings
-* Short-term and long-term capital 
-
-The net inflow amount is then divided by the respective country's GDP. The higher the value, the more foreign aid a country receives, and vice versa. 
-
-In addition, I analyzed the quality of South Korea's government by closely looking at its perception of corruption and democratic quality. Perception of corruption refers to how South Korean citizens believe whether or not its government makes fair and just choices in regards to the country's functions. Democratic quality includes factors, such as:
-
-* Voice and accountability
-* Political stability and absence of violence
-* Government effectiveness
-* Regulatory quality
-* Rule of law
-* Control of corruption
-
-Similar to the corruption scale, lower numbers represent more undemocratic conditions, while higher numbers represent more democratic conditions. Perceptions of corruption and democratic quality contribute to a country's overall happiness because the government can exercise huge influence over a citizen's life and happiness based on its policy decisions.
-
-I compared FDI with South Korea's quality of government because I wanted to see if South Korea's desire for foreign aid affects how it treats their people.
-
-For the data analysis method, I first gathered data about South Korea's FDI in 2006 - 2018 from the World Bank, and calculated the average FDI that they received throughout the 12 years. Then, I merged the perceptions of corruption and democratic quality columns to the first table to make direct comparisons. I filtered only to view South Korea's data. 
-
-```{r FDI in South Korea, echo=FALSE}
-combined_df
-southkorea_fdi_happiness_lineplot
-```
-
-From the table and line plot, the data displays that South Korea's perceptions of corruption and democratic quality have remained consistent, while FDI values have flucuated overtime between 2006 - 2018. Therefore, we cannot draw conclusions about how there are strong correlations between South Korea's amount of FDI received annually versus its quality of government, or that South Korea treats its citizens different if its government receives more/less foreign aid. Before starting this analysis, I thought there were would be some correlation between the three variables because I thought about how countries are more suspectible in giving foreign aid to other countries that treat their citizens with fairness and justice. However, it is imperative to point out that FDI and democratic quality was low in 2015. This may have been due to the impeachment of previous South Korean president, Park Geun-Hye, and her bribery scandal, which caused much distrust of South Korea's government of that specific year.
-
-### How does the amount of government debt in the US affect the perceptions of corruption?
-
-The government debt in the US is taken from the World Bank and the perceptions of corruption is taken from the UN Happiness data. The debt is defined by the percentage of GDP in the United States, while the perceptions of corruption is a score where the higher the number, the more corruption is perceived in the country.
-
-My data analysis method was to take the data of the perceptions of corruptions, and multiplied by 100 so it is easier to compare with the debt percentage on the plot. Since the happiness data only dates back to 2006, I filtered out the years for greater than or equal to 2006 for both of the data sets. I selected only the relevant columns and had to rename some of them like the years so they match up nicely during the left join process. I then plotted the data using the point and line plots and added in a line of best fit to show a correlation.
-
-```{r corruption_debt, echo = FALSE}
-us_debt_corruption_plot
-
-```
-
-The correlation between the changes in debt and the changes in the perceptions of corruption is `r debt_corruption_correlation[1, 2]`.
-
-With such a high correlation value of `r debt_corruption_correlation[1, 2]`, it is quite clear that the relationship between the two is as such: the rise in debt in the US results in the rise of the perception of corruption. Taking a look at 2013 to 2015, we can see that the debt percentage stabilizes with a change of `r debt_corruption[8, "debt"]` to `r debt_corruption[10, "debt"]`, and the perception of corruption decreases during the same years, from `r debt_corruption[8, "Perceptions.of.corruption"]` to `r debt_corruption[10, "Perceptions.of.corruption"]`. This shows that even if the debt percentage stagantes, the perceptions of corruption goes down. Then again in 2015, the debt rises again to `r debt_corruption[11, "debt"]`, and as a result, the perception of corruption rises to `r debt_corruption[11, "Perceptions.of.corruption"]`.
 
 ### Does a country's education determine or influence the happiness of its citizens?
 
@@ -134,8 +108,55 @@ The health expenditure dataset includes a value that is the the percent of Gross
 kable(expectancy_table)
 ```
 
-```{r health, echo = FALSE}
+```{r health_2, echo = FALSE}
 Health_plot
 ```
 
 It appears that there is a slight relationship between average % of GDP spent on health care and life expectancy with a correlation of `r correlation[[2]]`. The average health expenditure of countries is `r summary_spend[[4]]` % of GDP and the average life expectancy of countries is `r summary_life[[4]]` years. Since the correlation is weak, this reveals that spending a high percentage of GDP on health care doesn't necessarily result in higher life expectancy in a country as countries that have spent less % of GDP on healthcare have shown to have high average life expectancy. 
+
+### How does the amount of government debt in the US affect the perceptions of corruption?
+
+The government debt in the US is taken from the World Bank and the perceptions of corruption is taken from the UN Happiness data. The debt is defined by the percentage of GDP in the United States, while the perceptions of corruption is a score where the higher the number, the more corruption is perceived in the country.
+
+My data analysis method was to take the data of the perceptions of corruptions, and multiplied by 100 so it is easier to compare with the debt percentage on the plot. Since the happiness data only dates back to 2006, I filtered out the years for greater than or equal to 2006 for both of the data sets. I selected only the relevant columns and had to rename some of them like the years so they match up nicely during the left join process. I then plotted the data using the point and line plots and added in a line of best fit to show a correlation.
+
+```{r corruption_debt, echo = FALSE}
+us_debt_corruption_plot
+
+```
+
+The correlation between the changes in debt and the changes in the perceptions of corruption is `r debt_corruption_correlation[1, 2]`.
+
+With such a high correlation value of `r debt_corruption_correlation[1, 2]`, it is quite clear that the relationship between the two is as such: the rise in debt in the US results in the rise of the perception of corruption. Taking a look at 2013 to 2015, we can see that the debt percentage stabilizes with a change of `r debt_corruption[8, "debt"]` to `r debt_corruption[10, "debt"]`, and the perception of corruption decreases during the same years, from `r debt_corruption[8, "Perceptions.of.corruption"]` to `r debt_corruption[10, "Perceptions.of.corruption"]`. This shows that even if the debt percentage stagantes, the perceptions of corruption goes down. Then again in 2015, the debt rises again to `r debt_corruption[11, "debt"]`, and as a result, the perception of corruption rises to `r debt_corruption[11, "Perceptions.of.corruption"]`.
+
+### What is the relationship between the amount of South Korea's foreign direct investment (FDI) and quality of government?
+
+Foreign direct investment (FDI) refers to the net inflows of investment to acquire a lasting management interest (10% or more of voting stock) in an enterprise operating in an economy besides the investor. This measure includes factors, such as:
+
+* Sum of equity capital 
+* Reinvestment of earnings
+* Short-term and long-term capital 
+
+The net inflow amount is then divided by the respective country's GDP. The higher the value, the more foreign aid a country receives, and vice versa. 
+
+In addition, I analyzed the quality of South Korea's government by closely looking at its perception of corruption and democratic quality. Perception of corruption refers to how South Korean citizens believe whether or not its government makes fair and just choices in regards to the country's functions. Democratic quality includes factors, such as:
+
+* Voice and accountability
+* Political stability and absence of violence
+* Government effectiveness
+* Regulatory quality
+* Rule of law
+* Control of corruption
+
+Similar to the corruption scale, lower numbers represent more undemocratic conditions, while higher numbers represent more democratic conditions. Perceptions of corruption and democratic quality contribute to a country's overall happiness because the government can exercise huge influence over a citizen's life and happiness based on its policy decisions.
+
+I compared FDI with South Korea's quality of government because I wanted to see if South Korea's desire for foreign aid affects how it treats their people.
+
+For the data analysis method, I first gathered data about South Korea's FDI in 2006 - 2017 from the World Bank, and calculated the average FDI that they received throughout the 12 years. Then, I merged the perceptions of corruption and democratic quality columns to the first table to make direct comparisons. I filtered only to view South Korea's data. 
+
+```{r FDI in South Korea, echo=FALSE}
+kable(combined_df)
+southkorea_fdi_happiness_lineplot
+```
+
+From the table and line plot, the data displays that South Korea's perceptions of corruption and democratic quality have remained consistent, while FDI values have flucuated overtime between 2006 - 2017. Therefore, we cannot draw conclusions about how there are strong correlations between South Korea's amount of FDI received annually versus its quality of government, or that South Korea treats its citizens different if its government receives more/less foreign aid. Before starting this analysis, I thought there were would be some correlation between the three variables because I thought about how countries are more suspectible in giving foreign aid to other countries that treat their citizens with fairness and justice. However, it is imperative to point out that FDI and democratic quality was low in 2015. This may have been due to the impeachment of previous South Korean president, Park Geun-Hye, and her bribery scandal, which caused much distrust of South Korea's government of that specific year.

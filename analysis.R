@@ -162,7 +162,8 @@ combined_df <- merge(fdi_data, southkorea_happiness, by.x = "Year", sort = TRUE)
   rename("Country" = country) %>% 
   rename("Perceptions of Corruption" = Perceptions.of.corruption) %>% 
   rename("Democratic Quality" = Democratic.Quality) %>% 
-  select("Year", "FDI", "Perceptions of Corruption", "Democratic Quality")
+  select("Year", "FDI", "Perceptions of Corruption", "Democratic Quality") %>% 
+  head(12)
 
 southkorea_fdi_happiness_lineplot <- ggplot(data = combined_df) + # Plot three lines to compare South Korea's FDI, perceived corruption, and democratic quality
   geom_point(mapping = aes(x = Year, y = combined_df$FDI, color = "FDI")) +
@@ -316,4 +317,3 @@ us_debt_over_time_plot <- ggplot(data =  us_debt_preanalysis) +
 
 us_debt_preanalysis[1, "debt"]
 us_debt_preanalysis[11, "debt"]
-
