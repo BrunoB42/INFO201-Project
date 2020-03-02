@@ -52,7 +52,6 @@ us_debt_over_time_plot
 
 The data set of debt in the US from 2006 to 2016 does not have significant outliers, but rather shows a positive trend throughout the years. Although the difference in the debt percentage from 2006 to 2016 is `r us_debt_summary$range`, the debt percentage grew rapidly each year. The correlation between the years and percentages is `r us_debt_correlation[1, 2]` and the average percentage of debt is `r us_debt_summary$mean`.
 
-### Perceptions of Corruption in South Korea Throughout Time ###
 ```{r, echo=FALSE}
 sk_corruption_line
 ```
