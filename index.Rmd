@@ -1,12 +1,13 @@
 ---
-title: "Econ and Happiness Report"
-author: "Bruno, Grace, Jennifer, Tony"
-date: "2/25/2020"
+title: "World Bank Indicators and United Nations World Happiness Report"
+author: "Bruno Barreto, Grace Chun, Jennifer Qin, Tony Choi"
+date: "03/01/2020"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 source("analysis.R")
+library("knitr")
 ```
 
 ## The Data
@@ -22,5 +23,30 @@ source("analysis.R")
 
 
 ## Specific Question Analyses
+
+### What is the relationship between the amount of South Korea's foreign direct investment (FDI) and quality of government? ###
+
+FDI refers to net inflows of investment to acquire a lasting management interest (10% or more of voting stock) in an enterprise operating in an economy besides the investor. This includes, but is not limited to: sum of equity capital, reinvestment of earnings, short-term capital, and long-term capital. The net inflows are divided by South Korea's gross domestic product(GDP). 
+
+In terms of the UN's World Happiness Report, I focused on two specific columns: Perceptions of Corruption and Democratic Quality. The corruption values were collected by Transparency International, and measures the perceived degree of corruption in public sectors. Lower numbers mean that the public views high degrees of corruption within the government, while higher numbers indicate relative improvement. For democratic quality, this includes six measures: voice and accountability, political stability and absence of violence, government effectiveness, regulatory quality, rule of law, control of corruption.Similar to the corruption scale, lower numbers mean more undemocratic conditions, while higher numbers mean more democratic conditions.Perceptions of corruption and democratic quality contribute to a country's overall happiness because the government can exercise huge influence over a citizen's life based on decisions, such as specific policies. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
