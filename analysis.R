@@ -74,7 +74,7 @@ southkorea_fdi_happiness_lineplot <- ggplot(data = combined_df) +
   geom_path(mapping = aes(x = Year, y = FDI, group = 1, color = "FDI")) +
   geom_path(mapping = aes(x = Year, y = combined_df$`Perceptions of Corruption`, group = 1, color = "Perceptions of Corruption")) +
   geom_path(mapping = aes(x = Year, y = combined_df$`Democratic Quality`, group = 1, color = "Democratic Quality")) +
-  labs(title = "Relationship Between Foreign Direct Investment (FDI) and Government Quality in South Korea", x = "Year", y = "Variables", color = "Variables") 
+  labs(title = "Foreign Direct Investment (FDI) vs. Government Quality in South Korea", x = "Year", y = "Variables", color = "Variables") 
 
 
 
@@ -82,39 +82,50 @@ southkorea_fdi_happiness_lineplot <- ggplot(data = combined_df) +
 health_expenditure <- wb(country = "countries_only", cache = updated_cache, indicator = c("SH.XPD.CHEX.GD.ZS"), mrv = 20) 
 happy_df <- read.csv('data/UNRawHappinessData.csv', stringsAsFactors = FALSE)
 colnames(happy_df)[1] <-  "country"
+# made sure that countries in health data and happy data matched
 countries_in_both <- intersect(health_expenditure$country, happy_df$country)
 health_expenditure <- filter(health_expenditure, health_expenditure$country %in% countries_in_both)
 happy_df <- filter(happy_df, happy_df$country %in% countries_in_both)
-
+# joined the health spending and happy data together
 expectancy <- left_join(health_expenditure, happy_df, by = "country") %>% 
-  #filter(date == 2016 & Year == 2016) %>% 
   group_by(iso3c) %>% 
   summarise(
     spending = mean(value),
     Avg_life_expectancy=mean(Healthy.life.expectancy.at.birth)
   )
+
+# Got summary statistics and correlation of columns
+stats <- select(expectancy, spending , Avg_life_expectancy ) 
+correlation <- as.list(cor(stats))
+summary_spend <- as.list(summary(expectancy$spending))
+summary_life<- as.list(summary(expectancy$Avg_life_expectancy))
+  
+#Created a data table with the first 20 countries
+expectancy_table <- left_join(health_expenditure, happy_df, by = "country") %>% 
+  group_by(iso3c) %>% 
+  summarise(
+    spending = mean(value),
+    Avg_life_expectancy=mean(Healthy.life.expectancy.at.birth)
+  ) %>% 
+  head(10)
 expectancy_spend <- arrange(expectancy, iso3c) %>% 
   select(iso3c, spending) %>% 
   filter(!is.na(spending)) %>% 
   head(30)
   
-
-
+#Plotted a bar graph of the average % of GDP spent per country
 Country_spend <-ggplot(data = expectancy_spend, mapping = aes(x = reorder(iso3c, spending), y = spending)) + 
   geom_col()+
   labs(title= "Health Care Expenditures per Country", x = "Country", y = "Spending(% of GDP)")+
   theme(axis.text.x = element_text(size= 5,angle= 90))
 
   
-  
-#Compares Health Care Spending(% of GDP) to Healthy Life Expectancy for High income countries
+#Compares Health Care Spending(% of GDP) to Healthy Life Expectancy for countries
 Health_plot <- ggplot(data = expectancy, mapping = aes(x = spending, y = Avg_life_expectancy))+
   geom_point()+
   geom_smooth(method = "lm" , formula = y~x)+
   labs(title= "Health Care Expenditures Compared to Healthy Life Expectancy", x = "Average Spending(% of GDP)", y = "Healthy Life Expectancy")+
   xlim(1,17)
-
-
 
 # Tony Section
 # Called the World Bank Dataset regarding the percentage of debt in the US in the last 20 years.
@@ -163,8 +174,4 @@ us_debt_corruption_plot <- ggplot(data = debt_corruption_gather) +
        y = "Percentage",
        color = "Group") +
   scale_color_discrete(labels = c("Perceptions of Corruption", "Debt, Total (% of GDP)"))
-
-
-
-
 
