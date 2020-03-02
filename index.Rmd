@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 source("analysis.R")
+library(knitr)
 ```
 
 ## The Data
@@ -22,5 +23,27 @@ source("analysis.R")
 
 
 ## Specific Question Analyses
+
+### How does the amount of government debt in the US affect the perceptions of corruption?
+
+The government debt in the US is taken from the World Bank and the perceptions of corruption is taken from the UN Happiness data. The debt is defined by the percentage of GDP in the United States, while the perceptions of corruption is a score where the higher the number, the more corruption is perceived in the country.
+
+My data analysis method was to take the data of the perceptions of corruptions, and multiplied by 100 so it is easier to compare with the debt percentage on the plot. Since the happiness data only dates back to 2006, I filtered out the years for greater than or equal to 2006 for both of the data sets. I selected only the relevant columns and had to rename some of them like the years so they match up nicely during the left join process. I then plotted the data using the point and line plots and added in a line of best fit to show a correlation.
+
+```{r corruption_debt, echo = FALSE}
+us_debt_corruption_plot
+
+```
+
+The correlation between the changes in debt and the changes in the perceptions of corruption is `r debt_corruption_correlation[1, 2]`.
+
+With such a high correlation value of `r debt_corruption_correlation[1, 2]`, it is quite clear that the relationship between the two is as such: the rise in debt in the US results in the rise of the perception of corruption. Taking a look at 2013 to 2015, we can see that the debt percentage stabilizes with a change of `r debt_corruption[8, "debt"]` to `r debt_corruption[10, "debt"]`, and the perception of corruption decreases during the same years, from `r debt_corruption[8, "Perceptions.of.corruption"]` to `r debt_corruption[10, "Perceptions.of.corruption"]`. This shows that even if the debt percentage stagantes, the perceptions of corruption goes down. Then again in 2015, the debt rises again to `r debt_corruption[11, "debt"]`, and as a result, the perception of corruption rises to `r debt_corruption[11, "Perceptions.of.corruption"]`.
+
+
+
+
+
+
+
 
 

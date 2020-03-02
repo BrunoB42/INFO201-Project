@@ -11,7 +11,6 @@ updated_cache <- wbcache()
 edu_duration <- wb(country = "countries_only", indicator = "SE.COM.DURS", mrv = 10, cache = updated_cache) %>% filter(date=="2018") %>% rename(Country = country)
 change_in_happ <- read.csv("data/CountryChangeInHappiness2018.csv", stringsAsFactors = FALSE) %>% arrange(Country)
 happ_data <- read.csv("data/CountryHappiness2018.csv", stringsAsFactors = FALSE) %>% arrange(Country)
-raw_happ_data <- read.csv("data/UNRawHappinessData2018.csv", stringsAsFactors = FALSE) %>% arrange(Country)
 #Eliminating data for countries not in all three data sets
 countries_in_all_data <- intersect(intersect(change_in_happ$Country, happ_data$Country),edu_duration$Country)
 change_in_happ <- filter(change_in_happ, change_in_happ$Country %in% countries_in_all_data)
@@ -137,7 +136,7 @@ happiness_df <- read.csv('data/UNRawHappinessData.csv', stringsAsFactors = FALSE
 corruption_happiness_df <- happiness_df %>%
   filter(Country.name == "United States") %>%
   select(Year, Perceptions.of.corruption) %>%
-  # Multiplied the percentages by 100 so it matches the debt percentages.
+  # Multiplied the percentages by 100 so the plot is easier to compare.
   mutate(Perceptions.of.corruption = Perceptions.of.corruption * 100)
 
 # Left joined the corruption data frame to the debt data frame, sorting by the year. And since
@@ -145,6 +144,11 @@ corruption_happiness_df <- happiness_df %>%
 # to 2006.
 debt_corruption <- left_join(us_debt_df, corruption_happiness_df, by = "Year") %>%
   filter(Year >= 2006)
+
+# Calculated corruption
+debt_corruption_correlation <- debt_corruption %>%
+  select(debt, Perceptions.of.corruption) %>%
+  cor()
 
 # Gathered the two datasets so I can plot it.
 debt_corruption_gather <- debt_corruption %>%
@@ -156,11 +160,12 @@ debt_corruption_gather <- debt_corruption %>%
 us_debt_corruption_plot <- ggplot(data = debt_corruption_gather) +
   geom_line(mapping = aes(x = Year, y = percentage, color = Type)) +
   geom_point(mapping = aes(x = Year, y = percentage, color = Type)) +
+  geom_smooth(mapping = aes(x = Year, y = percentage), method = "lm", formula = y ~ x) +
   labs(title = "US Debt vs. Perception of Corruption",
        x = "Year",
-       y = "Percentage",
+       y = "Value",
        color = "Group") +
-  scale_color_discrete(labels = c("Perceptions of Corruption", "Debt, Total (% of GDP)"))
+  scale_color_discrete(labels = c("Debt, Total (% of GDP)", "Perceptions of Corruption Score"))
 
 
 
