@@ -7,30 +7,60 @@ output: html_document
 
 ```{r setup, include=FALSE}
 source("analysis.R")
+library('knitr')
 ```
-
-## The Data
-
-
 
 ## Problem Domain Description
 
 
 
 ## Data Description
-```{r}
-sk_corruption_line
 
-corruption_mean <- summarize(southkorea_happiness, Perceptions_of_Corruption_Avg = mean(southkorea_happiness$Perceptions.of.corruption))
-corruption_max <- summarize(southkorea_happiness, Perceptions_of_Corruption_Max = max(southkorea_happiness$Perceptions.of.corruption))
-corruption_min <- summarize(southkorea_happiness, Perceptions_of_Corruption_Min = min(southkorea_happiness$Perceptions.of.corruption, na.rm = TRUE))
+In order to address our questions, we will be using two main data sets.
+Firstly, we will use the [World Bank's economic indicator data set](https://data.worldbank.org/indicator?tab=all), which contains data on numerous economic indicators from countries around the world and over many years.
+And secondly, we will compare these economic indicators to the [UN's World Happiness Report](https://worldhappiness.report/) for 2018 and 2019, which contains extensive data on the reported happiness and the factors behind them for countries across the world.
+
+`r kable(edu_duration_raw)`
+
+In the above data from the World Bank, the indicator column describes what type of data is present in the table while the value column gives the value of that indicator at the time and in the country given by the date and country columns respectively.
+
+`r kable(happ_data_raw)`
+
+In the above Happiness Report data, all column values are _relative_ values that indicate either the reported happiness for a particular country, in the Happiness.score column, or the amount of that reported happiness that is explained by a particular factor, such as in the Explained.by..GDP.per.capita column.
+These values are all relative to the reported happiness value for a hypothetical country, Dystopia, that uses the lowest values in all categories from the previous year's report and as such cannot be used for anything other than relative comparisons.
+
+### Summary Analysis
+
+The data for the change in happiness from the UN has a mean of `r Change_in_Happiness_Summary[[4]]`, a median of `r Change_in_Happiness_Summary[[3]]`, a first quartile of `r Change_in_Happiness_Summary[[2]]`, and a third quartile of `r Change_in_Happiness_Summary[[5]]`.
+These values show that the average country in the data set showed very little change school enrollment since the quartiles and mean are very close to 0%.
+
+```{r happ_change_plot, echo = FALSE}
+Change_in_Happiness_Hist
+```
+
+In the above histogram, it can be seen that the change in happiness data has an extreme outlier in the form of Malawi with a `r change_in_happ$Changes.in.happiness.scores[22]` change in relative happiness. 
+
+```{r health, echo = FALSE}
+life_average_plot
+```
+
+This histogram displays the distribution of average healthy life expectancies of countries from 2000 - 2018. The minimum average health life expectancy in this plot is `r summary_stats[[1]]`years and the maximum average health life expectancy is `r summary_stats[[6]]` years. The average life expectancy for citizens in the countries listed in two data sets is about `r summary_stats[[4]]` years. The histogram reveals the that distrubition is suffiently uneven with some extreme values and there may be factors to further explore that are contributing to it. 
+
+```{r us_debt_over_time, echo = FALSE}
+us_debt_over_time_plot
+```
+
+The data set of debt in the US from 2006 to 2016 does not have significant outliers, but rather shows a positive trend throughout the years. Although the difference in the debt percentage from 2006 to 2016 is `r us_debt_summary$range`, the debt percentage grew rapidly each year. The correlation between the years and percentages is `r us_debt_correlation[1, 2]` and the average percentage of debt is `r us_debt_summary$mean`.
+
+```{r, echo=FALSE}
+sk_corruption_line
 ```
 
 The corruption values were collected by Transparency International, and measures the perceived degree of corruption in public sectors.
 Lower numbers mean that the public views high degrees of corruption within the government, while higher numbers indicate relative improvement. 
 The mean value is `r corruption_mean`; the maximum value is `r corruption_max`; and the minimum value is `r corruption_min`.
 
-
 ## Specific Question Analyses
+
 
 
