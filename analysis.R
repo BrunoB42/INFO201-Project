@@ -68,7 +68,7 @@ ggplot(data = southkorea_happiness) +
   labs(title = "Perceived Corruption Throughout Time in South Korea's Public Sector", x = "Year", y = "Perceived Level of Corruption")
 
 # 3) Any outliers?
-# There are no outliers. Most of the values range from 0.75-0.90. 
+# There are no outliers. Most of the values range from 0.75-0.90, which indicates that South Korean citizens do not perceive as much corruption from their government. 
 
 # Jennifer Section
 
