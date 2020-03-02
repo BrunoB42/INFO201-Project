@@ -147,14 +147,18 @@ sk_corruption_line <- ggplot(data = southkorea_happiness) +
 health_expenditure <- wb(country = "countries_only", cache = updated_cache, indicator = c("SH.XPD.CHEX.GD.ZS"), mrv = 20) 
 happy_df <- read.csv('data/UNRawHappinessData.csv', stringsAsFactors = FALSE)
 colnames(happy_df)[1] <-  "country"
+#filtered for same countries in both datasets
 countries_in_both <- intersect(health_expenditure$country, happy_df$country)
 health_expenditure <- filter(health_expenditure, health_expenditure$country %in% countries_in_both) 
 happy_df <- filter(happy_df, happy_df$country %in% countries_in_both)
 
+#joined happy and health expenditure data together
 spend_expect <- left_join(health_expenditure, happy_df, by = "country")
+#produced statistics for value and life expectancy and turned into list to extract from
 spending_stats <- as.list(summary(spend_expect$value))
 life_stats <- as.list(summary(spend_expect$Healthy.life.expectancy.at.birth))
 
+#joined happy and health expenditure, calculated average % of GDP spent and average life expectancy
 expectancy <- left_join(health_expenditure, happy_df, by = "country") %>% 
   group_by(iso3c) %>% 
   summarise(
@@ -162,12 +166,14 @@ expectancy <- left_join(health_expenditure, happy_df, by = "country") %>%
     Avg_life_expectancy=mean(Healthy.life.expectancy.at.birth)
   ) 
 
+#got summary statistics of average life expectancy
 summary_stats <- as.list(summary(expectancy$Avg_life_expectancy))
 
+#Created histogram of life expectancy from original data.
 life_plot <- ggplot(data=spend_expect, aes(spend_expect$Healthy.life.expectancy.at.birth)) +
   geom_histogram(color="darkblue", fill="lightblue")+
   labs(title = "Histogram for Healthy Life Expectancy", x = "Life Expectancy", y = "Frequency")
-
+#Created histogram from calculated average life expectancy
 life_average_plot <- ggplot(data=expectancy, aes(expectancy$Avg_life_expectancy)) +
   geom_histogram(color="darkblue", fill="lightblue", binwidth = 4)+
   labs(title = "Histogram for Average Life Expectancy", x = "Average Life Expectancy", y = "Frequency")
