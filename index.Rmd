@@ -1,7 +1,7 @@
 ---
-title: "Econ and Happiness Report"
-author: "Bruno, Grace, Jennifer, Tony"
-date: "2/25/2020"
+title: "World Bank Indicators and United Nations World Happiness Report"
+author: "Bruno Barreto, Grace Chun, Jennifer Qin, Tony Choi"
+date: "03/01/2020"
 output: html_document
 ---
 
@@ -18,7 +18,17 @@ source("analysis.R")
 
 
 ## Data Description
+```{r}
+sk_corruption_line
 
+corruption_mean <- summarize(southkorea_happiness, Perceptions_of_Corruption_Avg = mean(southkorea_happiness$Perceptions.of.corruption))
+corruption_max <- summarize(southkorea_happiness, Perceptions_of_Corruption_Max = max(southkorea_happiness$Perceptions.of.corruption))
+corruption_min <- summarize(southkorea_happiness, Perceptions_of_Corruption_Min = min(southkorea_happiness$Perceptions.of.corruption, na.rm = TRUE))
+```
+
+The corruption values were collected by Transparency International, and measures the perceived degree of corruption in public sectors.
+Lower numbers mean that the public views high degrees of corruption within the government, while higher numbers indicate relative improvement. 
+The mean value is `r corruption_mean`; the maximum value is `r corruption_max`; and the minimum value is `r corruption_min`.
 
 
 ## Specific Question Analyses
