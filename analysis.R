@@ -24,13 +24,16 @@ Current_Education_Happiness_Plot <- ggplot(data = data_set, mapping = aes(x=valu
   xlab("Years of Compulsory Education") +
   ylab("Relative Happiness")
 
+data_set_to_display <- data_set %>% head(15) %>% select(-indicator)
+current_cor <- cor(data_set$value,data_set$Happiness.score)
+
 change_in_happ <- read.csv("data/CountryChangeInHappiness2018.csv", stringsAsFactors = FALSE) %>% arrange(Country) %>% filter(Country!="Sierra Leone")
 full_edu_data <- wb(country = "countries_only", indicator = "SE.PRM.ENRR", mrv = 3, cache = updated_cache) %>% 
   filter(date!="2019") %>% 
   rename(Country = country)
 #Separating data by year to find change and eliminating data for countries not in all three data sets
 edu_data_2018 <- filter(full_edu_data, date=="2018")
-edu_data_2017 <- filter(full_edu_data, date=="201`7")
+edu_data_2017 <- filter(full_edu_data, date=="2017")
 countries_in_all_data_2 <- intersect(intersect(edu_data_2017$Country,edu_data_2018$Country), change_in_happ$Country)
 edu_data_2018 <- filter(edu_data_2018, edu_data_2018$Country %in% countries_in_all_data_2)
 edu_data_2017 <- filter(edu_data_2017, edu_data_2017$Country %in% countries_in_all_data_2)
@@ -44,6 +47,8 @@ Change_in_Education_Happiness_Plot <- ggplot(data = change_in_happ, mapping = ae
   xlab("Change in Primary School Enrollment %") +
   ylab("Change in Relative Happiness")
 
+change_in_happ_to_display <- change_in_happ %>% head(15)
+change_cor <- cor(change_in_happ$change_in_education, change_in_happ$Changes.in.happiness.scores)
 
 # Grace Section
 fdi_data <- wb(country = "KOR", indicator = "BX.KLT.DINV.WD.GD.ZS", mrv = 13, return_wide = TRUE) %>% # Gather data about South Korea's FDI over the past 12 years  
@@ -73,42 +78,53 @@ southkorea_fdi_happiness_lineplot <- ggplot(data = combined_df) + # Plot three l
 
 
 # Jennifer Section
-updated_cache <- wbcache()
 health_expenditure <- wb(country = "countries_only", cache = updated_cache, indicator = c("SH.XPD.CHEX.GD.ZS"), mrv = 20) 
 happy_df <- read.csv('data/UNRawHappinessData.csv', stringsAsFactors = FALSE)
 colnames(happy_df)[1] <-  "country"
+# made sure that countries in health data and happy data matched
 countries_in_both <- intersect(health_expenditure$country, happy_df$country)
 health_expenditure <- filter(health_expenditure, health_expenditure$country %in% countries_in_both)
 happy_df <- filter(happy_df, happy_df$country %in% countries_in_both)
-
+# joined the health spending and happy data together
 expectancy <- left_join(health_expenditure, happy_df, by = "country") %>% 
-  #filter(date == 2016 & Year == 2016) %>% 
   group_by(iso3c) %>% 
   summarise(
     spending = mean(value),
     Avg_life_expectancy=mean(Healthy.life.expectancy.at.birth)
   )
+
+# Got summary statistics and correlation of columns
+stats <- select(expectancy, spending , Avg_life_expectancy ) 
+correlation <- as.list(cor(stats))
+summary_spend <- as.list(summary(expectancy$spending))
+summary_life<- as.list(summary(expectancy$Avg_life_expectancy))
+  
+#Created a data table with the first 20 countries
+expectancy_table <- left_join(health_expenditure, happy_df, by = "country") %>% 
+  group_by(iso3c) %>% 
+  summarise(
+    spending = mean(value),
+    Avg_life_expectancy=mean(Healthy.life.expectancy.at.birth)
+  ) %>% 
+  head(10)
 expectancy_spend <- arrange(expectancy, iso3c) %>% 
   select(iso3c, spending) %>% 
   filter(!is.na(spending)) %>% 
   head(30)
   
-
-
+#Plotted a bar graph of the average % of GDP spent per country
 Country_spend <-ggplot(data = expectancy_spend, mapping = aes(x = reorder(iso3c, spending), y = spending)) + 
   geom_col()+
   labs(title= "Health Care Expenditures per Country", x = "Country", y = "Spending(% of GDP)")+
   theme(axis.text.x = element_text(size= 5,angle= 90))
 
   
-  
-#Compares Health Care Spending(% of GDP) to Healthy Life Expectancy for High income countries
+#Compares Health Care Spending(% of GDP) to Healthy Life Expectancy for countries
 Health_plot <- ggplot(data = expectancy, mapping = aes(x = spending, y = Avg_life_expectancy))+
   geom_point()+
   geom_smooth(method = "lm" , formula = y~x)+
   labs(title= "Health Care Expenditures Compared to Healthy Life Expectancy", x = "Average Spending(% of GDP)", y = "Healthy Life Expectancy")+
   xlim(1,17)
-
 
 # Tony Section
 # Called the World Bank Dataset regarding the percentage of debt in the US in the last 20 years.
@@ -133,7 +149,7 @@ happiness_df <- read.csv('data/UNRawHappinessData.csv', stringsAsFactors = FALSE
 corruption_happiness_df <- happiness_df %>%
   filter(Country.name == "United States") %>%
   select(Year, Perceptions.of.corruption) %>%
-  # Multiplied the percentages by 100 so it matches the debt percentages.
+  # Multiplied the percentages by 100 so the plot is easier to compare.
   mutate(Perceptions.of.corruption = Perceptions.of.corruption * 100)
 
 # Left joined the corruption data frame to the debt data frame, sorting by the year. And since
@@ -141,6 +157,11 @@ corruption_happiness_df <- happiness_df %>%
 # to 2006.
 debt_corruption <- left_join(us_debt_df, corruption_happiness_df, by = "Year") %>%
   filter(Year >= 2006)
+
+# Calculated corruption
+debt_corruption_correlation <- debt_corruption %>%
+  select(debt, Perceptions.of.corruption) %>%
+  cor()
 
 # Gathered the two datasets so I can plot it.
 debt_corruption_gather <- debt_corruption %>%
@@ -152,13 +173,10 @@ debt_corruption_gather <- debt_corruption %>%
 us_debt_corruption_plot <- ggplot(data = debt_corruption_gather) +
   geom_line(mapping = aes(x = Year, y = percentage, color = Type)) +
   geom_point(mapping = aes(x = Year, y = percentage, color = Type)) +
+  geom_smooth(mapping = aes(x = Year, y = percentage), method = "lm", formula = y ~ x) +
   labs(title = "US Debt vs. Perception of Corruption",
        x = "Year",
-       y = "Percentage",
+       y = "Value",
        color = "Group") +
-  scale_color_discrete(labels = c("Perceptions of Corruption", "Debt, Total (% of GDP)"))
-
-
-
-
+  scale_color_discrete(labels = c("Debt, Total (% of GDP)", "Perceptions of Corruption Score"))
 
