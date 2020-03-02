@@ -126,26 +126,33 @@ us_debt_df <- wb(country = "USA",
 us_debt_df <- us_debt_df %>%
   mutate(date = as.numeric(date), "Year" = date, date = NULL)
 
-
+# Renamed the indicator column to "debt" and selected only the relevant columns.
 us_debt_df <- us_debt_df %>%
   mutate(debt = GC.DOD.TOTL.GD.ZS) %>%
   select(Year, debt)
 
+# Called the happiness data and filtered it for perceptions of corruption.
 happiness_df <- read.csv('data/UNRawHappinessData.csv', stringsAsFactors = FALSE)
 
 corruption_happiness_df <- happiness_df %>%
   filter(Country.name == "United States") %>%
   select(Year, Perceptions.of.corruption) %>%
+  # Multiplied the percentages by 100 so it matches the debt percentages.
   mutate(Perceptions.of.corruption = Perceptions.of.corruption * 100)
 
+# Left joined the corruption data frame to the debt data frame, sorting by the year. And since
+# the happiness data only dates back to 2006, filtered out the years for greater than or equal
+# to 2006.
 debt_corruption <- left_join(us_debt_df, corruption_happiness_df, by = "Year") %>%
   filter(Year >= 2006)
 
+# Gathered the two datasets so I can plot it.
 debt_corruption_gather <- debt_corruption %>%
   gather(key = Type,
          value = percentage,
          -Year)
 
+# Used line and point plots to show changed over time and compare the two datas together.
 us_debt_corruption_plot <- ggplot(data = debt_corruption_gather) +
   geom_line(mapping = aes(x = Year, y = percentage, color = Type)) +
   geom_point(mapping = aes(x = Year, y = percentage, color = Type)) +
