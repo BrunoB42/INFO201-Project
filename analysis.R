@@ -94,8 +94,9 @@ expectancy <- left_join(health_expenditure, happy_df, by = "country") %>%
 
 # Got summary statistics and correlation of columns
 stats <- select(expectancy, spending , Avg_life_expectancy ) 
-correlation <- cor(stats)
-  
+correlation <- as.list(cor(stats))
+summary_spend <- as.list(summary(expectancy$spending))
+summary_life<- as.list(summary(expectancy$Avg_life_expectancy))
   
 #Created a data table with the first 20 countries
 expectancy_table <- left_join(health_expenditure, happy_df, by = "country") %>% 

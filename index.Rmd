@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 source("analysis.R")
+library(knitr)
 ```
 
 ## The Data
@@ -27,10 +28,13 @@ source("analysis.R")
 The health expenditure dataset includes a value that is the the percent of Gross Domestic Product(GDP), a representation of the monetary value of goods and services, that each country is spending on health care costs within a year. The question attempts to answer if the % of GDP spent contributes to higher or lower life expectancies. I took the average percent of GDP spent on healthcare and compared it to the average life expectancies for each country. 
 
 ```{r health table , echo = FALSE}
-expectancy_table
+kable(expectancy_table)
 ```
+
+
 
 ```{r health, echo = FALSE}
 Health_plot
 ```
 
+It appears that there is a slight relationship between average % of GDP spent on health care and life expectancy with a correlation of `r correlation[[2]]`. The average health expenditure of countries is `r summary_spend[[4]]` % of GDP and the average life expectancy of countries is `r summary_life[[4]]` years. Since the correlation is weak, this reveals that spending a high percentage of GDP on health care doesn't necessarily result in higher life expectancy in a country as countries that have spent less % of GDP on healthcare have shown to have high average life expectancy. 
