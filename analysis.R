@@ -57,9 +57,9 @@ southkorea_happiness <- happiness_df %>%
 # Subsection 2.2 Summary Analysis
 
 # 1) Summary of descriptive statistics
-fdi_mean <- summarize(fdi_data, FDI_Avg = mean(fdi_data$BX.KLT.DINV.WD.GD.ZS))
+corruption_mean <- summarize(southkorea_happiness, Perceptions_of_Corruption_Avg = mean(southkorea_happiness$Perceptions.of.corruption))
 corruption_max <- summarize(southkorea_happiness, Perceptions_of_Corruption_Max = max(southkorea_happiness$Perceptions.of.corruption))
-democratic_min <- summarize(southkorea_happiness, Democratic_Quality_Min = min(southkorea_happiness$Democratic.Quality, na.rm = TRUE))
+corruption_min <- summarize(southkorea_happiness, Perceptions_of_Corruption_Min = min(southkorea_happiness$Perceptions.of.corruption, na.rm = TRUE))
 
 # 2) Graphic or plot showing distribution/trend
 sk_corruption_line <- ggplot(data = southkorea_happiness) + 
